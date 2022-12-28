@@ -53,3 +53,17 @@ def get_one(request):
     response['msg'] = 'success'
     response['data'] = data
     return HttpResponse(json.dumps(response))
+
+
+@require_http_methods(['GET'])
+@csrf_exempt
+def get_random_poem(request):
+    response = {}
+    res = requests.get("https://v1.jinrishici.com/all.json")
+    data = res.json()
+    data['category'] = data['category'].split('-')
+    response['code'] = 200
+    response['msg'] = 'success'
+    response['data'] = data
+
+    return HttpResponse(json.dumps(response))
